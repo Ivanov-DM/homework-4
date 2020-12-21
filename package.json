@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Ivanov-DM/homework-4/issues"
   },
-  "homepage": "https://github.com/Ivanov-DM/homework-4#readme"
+  "homepage": "https://github.com/Ivanov-DM/homework-4#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "jest": "^26.6.3"
+  }
 }
