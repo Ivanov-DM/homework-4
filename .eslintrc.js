@@ -11,5 +11,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'import/prefer-default-export': 'off',
+    'max-len': ['error', { ignoreComments: true }],
   },
 };
