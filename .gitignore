@@ -3,3 +3,4 @@ node_modules
 4
 .eslintcache
 coverage
+dist
