@@ -40,4 +40,9 @@ module.exports = {
       filename: "index.html", // название выходного файла
     }),
   ],
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    compress: true,
+    port: 9000,
+  },
 };
