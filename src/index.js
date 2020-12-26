@@ -34,5 +34,12 @@ export function createForm(el) {
   }
 }
 
+export function getCurrentCityTitle() {
+  return fetch("https://get.geojs.io/v1/ip/geo.json")
+    .then((response) => response.json())
+    .then((data) => data.city)
+    .catch(() => null);
+}
+
 const container = document.querySelector("#container");
 createForm(container);
