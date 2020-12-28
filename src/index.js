@@ -1,3 +1,5 @@
+const OPEN_WEATHER_MAP_API_KEY = "325a22275c1255e94a9b1ee8ae86259a";
+
 export function createForm(el) {
   const inputForm = document.createElement("form");
 
@@ -35,16 +37,12 @@ export function createForm(el) {
 export function getCurrentCityTitle() {
   return fetch("https://get.geojs.io/v1/ip/geo.json")
     .then((response) => response.json())
-    .then((data) => data.city)
-    .catch(() => null);
+    .then((data) => data.city);
 }
 
-export function getWeatherData(cityName) {
-  const API_KEY = "325a22275c1255e94a9b1ee8ae86259a";
+export function getWeatherData(cityName, API_KEY) {
   const API_URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityName}&appid=${API_KEY}`;
-  return fetch(API_URL)
-    .then((response) => response.json())
-    .catch(() => null);
+  return fetch(API_URL).then((response) => response.json());
 }
 
 export function drawWeather(data) {
@@ -80,7 +78,7 @@ export function drawWeather(data) {
 const container = document.querySelector("#container");
 createForm(container);
 getCurrentCityTitle().then((cityName) => {
-  getWeatherData(cityName).then((data) => {
+  getWeatherData(cityName, OPEN_WEATHER_MAP_API_KEY).then((data) => {
     drawWeather(data);
   });
 });
