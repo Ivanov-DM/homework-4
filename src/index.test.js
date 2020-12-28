@@ -1,4 +1,4 @@
-import { createForm, getCurrentCityTitle } from "./index";
+import { createForm, getCurrentCityTitle, getWeatherData } from "./index";
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -54,7 +54,7 @@ describe("Tests for index.js", () => {
     });
   });
 
-  it("handles exception with null", () => {
+  it("handles exception in getCurrentCityTitle with null", () => {
     fetch.mockImplementationOnce(() =>
       Promise.reject(new Error("API failure"))
     );
@@ -62,6 +62,33 @@ describe("Tests for index.js", () => {
       expect(data).toEqual(null);
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith("https://get.geojs.io/v1/ip/geo.json");
+    });
+  });
+
+  it("get dataWeather for same city", () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            main: {
+              temp: 1.83,
+            },
+            name: "Elista",
+            weather: [
+              {
+                description: "overcast clouds",
+                icon: "04n",
+              },
+            ],
+          }),
+      })
+    );
+    return getWeatherData().then((data) => {
+      expect(data.main.temp).toBe(1.83);
+      expect(data.name).toEqual("Elista");
+      expect(data.weather[0].description).toEqual("overcast clouds");
+      expect(data.weather[0].icon).toEqual("04n");
+      expect(fetch).toHaveBeenCalledTimes(1);
     });
   });
 });
