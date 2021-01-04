@@ -1,13 +1,11 @@
-import { createForm, getCurrentCityTitle, getWeatherData } from "./index";
-
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () => Promise.resolve({ city: "Moscow" }),
-  })
-);
+import { createForm, getCurrentCityTitle, getWeatherData } from "./app";
 
 describe("Tests for index.js", () => {
   let el;
+
+  beforeAll(() => {
+    global.fetch = jest.fn();
+  });
 
   beforeEach(() => {
     el = document.createElement("div");
@@ -45,8 +43,9 @@ describe("Tests for index.js", () => {
   });
 
   it("get city title for current user location", () => {
+    fetch.mockResolvedValue("Moscow");
     const expected = "Moscow";
-    return getCurrentCityTitle().then((data) => {
+    getCurrentCityTitle().then((data) => {
       expect(typeof data).toBe("string");
       expect(data).toBe(expected);
       expect(fetch).toHaveBeenCalledTimes(1);
@@ -54,36 +53,31 @@ describe("Tests for index.js", () => {
     });
   });
 
-  it("handles exception in getCurrentCityTitle with null", () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.reject(new Error("API failure"))
-    );
-    return getCurrentCityTitle().then((data) => {
-      expect(data).toEqual(null);
+  it("handles exception in getCurrentCityTitle", () => {
+    fetch.mockRejectedValue(new Error("API failure"));
+    getCurrentCityTitle().catch(() => {
+      expect(fetch).toThrow("API failure");
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith("https://get.geojs.io/v1/ip/geo.json");
     });
   });
 
   it("get dataWeather for same city", () => {
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        json: () =>
-          Promise.resolve({
-            main: {
-              temp: 1.83,
-            },
-            name: "Elista",
-            weather: [
-              {
-                description: "overcast clouds",
-                icon: "04n",
-              },
-            ],
-          }),
+    fetch.mockResolvedValue(
+      JSON.stringify({
+        main: {
+          temp: 1.83,
+        },
+        name: "Elista",
+        weather: [
+          {
+            description: "overcast clouds",
+            icon: "04n",
+          },
+        ],
       })
     );
-    return getWeatherData().then((data) => {
+    getWeatherData().then((data) => {
       expect(data.main.temp).toBe(1.83);
       expect(data.name).toEqual("Elista");
       expect(data.weather[0].description).toEqual("overcast clouds");
