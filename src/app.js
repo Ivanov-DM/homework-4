@@ -45,30 +45,26 @@ export function getWeatherData(cityName, API_KEY) {
 
 export function drawWeather(data) {
   const weatherBloc = document.getElementById("weatherBlock");
-  if (data) {
-    const cityTitle = document.createElement("h2");
-    const currentTemp = document.createElement("p");
-    const weatherDescription = document.createElement("p");
-    const weatherIcon = document.createElement("img");
-    cityTitle.innerText = data.name;
-    const temperature = data.main.temp;
-    currentTemp.innerText =
-      temperature > 0 ? `+${temperature}° С` : `${temperature}° С`;
-    weatherDescription.innerText = data.weather[0].description;
-    weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    if (weatherBloc.childNodes.length === 0) {
-      weatherBloc.appendChild(cityTitle);
-      weatherBloc.appendChild(currentTemp);
-      weatherBloc.appendChild(weatherIcon);
-      weatherBloc.appendChild(weatherDescription);
-    } else {
-      weatherBloc.innerHTML = "";
-      weatherBloc.appendChild(cityTitle);
-      weatherBloc.appendChild(currentTemp);
-      weatherBloc.appendChild(weatherIcon);
-      weatherBloc.appendChild(weatherDescription);
-    }
+  const cityTitle = document.createElement("h2");
+  const currentTemp = document.createElement("p");
+  const weatherDescription = document.createElement("p");
+  const weatherIcon = document.createElement("img");
+  cityTitle.innerText = data.name;
+  const temperature = data.main.temp;
+  currentTemp.innerText =
+    temperature > 0 ? `+${temperature}° С` : `${temperature}° С`;
+  weatherDescription.innerText = data.weather[0].description;
+  weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+  if (weatherBloc.childNodes.length === 0) {
+    weatherBloc.appendChild(cityTitle);
+    weatherBloc.appendChild(currentTemp);
+    weatherBloc.appendChild(weatherIcon);
+    weatherBloc.appendChild(weatherDescription);
   } else {
-    weatherBloc.innerHTML = "This city is not exists";
+    weatherBloc.innerHTML = "";
+    weatherBloc.appendChild(cityTitle);
+    weatherBloc.appendChild(currentTemp);
+    weatherBloc.appendChild(weatherIcon);
+    weatherBloc.appendChild(weatherDescription);
   }
 }
