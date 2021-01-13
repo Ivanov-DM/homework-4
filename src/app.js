@@ -43,28 +43,23 @@ export function getWeatherData(cityName, API_KEY) {
   return fetch(API_URL).then((response) => response.json());
 }
 
-export function drawWeather(data) {
-  const weatherBloc = document.getElementById("weatherBlock");
+export function drawWeather(data, weatherBlock) {
   const cityTitle = document.createElement("h2");
+  cityTitle.id = "cityTitle";
   const currentTemp = document.createElement("p");
+  currentTemp.id = "currentTemp";
   const weatherDescription = document.createElement("p");
+  weatherDescription.id = "weatherDescription";
   const weatherIcon = document.createElement("img");
+  weatherIcon.id = "weatherIcon";
   cityTitle.innerText = data.name;
   const temperature = data.main.temp;
   currentTemp.innerText =
     temperature > 0 ? `+${temperature}° С` : `${temperature}° С`;
   weatherDescription.innerText = data.weather[0].description;
   weatherIcon.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-  if (weatherBloc.childNodes.length === 0) {
-    weatherBloc.appendChild(cityTitle);
-    weatherBloc.appendChild(currentTemp);
-    weatherBloc.appendChild(weatherIcon);
-    weatherBloc.appendChild(weatherDescription);
-  } else {
-    weatherBloc.innerHTML = "";
-    weatherBloc.appendChild(cityTitle);
-    weatherBloc.appendChild(currentTemp);
-    weatherBloc.appendChild(weatherIcon);
-    weatherBloc.appendChild(weatherDescription);
-  }
+  weatherBlock.appendChild(cityTitle);
+  weatherBlock.appendChild(currentTemp);
+  weatherBlock.appendChild(weatherIcon);
+  weatherBlock.appendChild(weatherDescription);
 }
