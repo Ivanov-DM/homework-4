@@ -59,17 +59,6 @@ describe("Tests for index.js", () => {
     expect(cityMap).not.toBeNull();
   });
 
-  // it("get city title for current user location", () => {
-  //   fetch.mockResolvedValue("Moscow");
-  //   const expected = "Moscow";
-  //   getCurrentCityTitle().then((data) => {
-  //     expect(typeof data).toBe("string");
-  //     expect(data).toBe(expected);
-  //     expect(fetch).toHaveBeenCalledTimes(1);
-  //     expect(fetch).toHaveBeenCalledWith("https://get.geojs.io/v1/ip/geo.json");
-  //   });
-  // });
-
   it("get city title for current user location", () => {
     fetch.mockImplementationOnce(() =>
       Promise.resolve({
@@ -101,18 +90,18 @@ describe("Tests for index.js", () => {
 
   it("draw weather forecast for some city", () => {
     createForm(el);
-    const weatherBlock = el.querySelector("#weatherBlock");
     fetch.mockImplementationOnce(() =>
       Promise.resolve({
         json: () => Promise.resolve(testData),
       })
     );
     return getWeatherData().then((data) => {
-      drawWeather(data, weatherBlock);
+      drawWeather(data, el);
       const cityTitle = el.querySelector("#cityTitle");
       const currentTemp = el.querySelector("#currentTemp");
       const description = el.querySelector("#weatherDescription");
       const weatherIcon = el.querySelector("#weatherIcon");
+      const cityMap = el.querySelector("#cityMap");
       expect(cityTitle).not.toBeNull();
       expect(cityTitle.innerText).toEqual("Elista");
       expect(currentTemp).not.toBeNull();
@@ -122,6 +111,10 @@ describe("Tests for index.js", () => {
       expect(weatherIcon).not.toBeNull();
       expect(weatherIcon.src).toEqual(
         "http://openweathermap.org/img/wn/04n@2x.png"
+      );
+      expect(cityMap).not.toBeNull();
+      expect(cityMap.src).toEqual(
+        "https://maps.googleapis.com/maps/api/staticmap?center=Elista&zoom=13&size=400x400&key=AIzaSyCn9o27r_AnjgLXWymUmKW7b5C3y62OAG8"
       );
     });
   });

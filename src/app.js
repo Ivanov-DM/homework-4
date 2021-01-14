@@ -43,7 +43,13 @@ export function getWeatherData(cityName, API_KEY) {
   return fetch(API_URL).then((response) => response.json());
 }
 
-export function drawWeather(data, weatherBlock) {
+export function getCityMapImgAddress(cityName) {
+  return `https://maps.googleapis.com/maps/api/staticmap?center=${cityName}&zoom=13&size=400x400&key=AIzaSyCn9o27r_AnjgLXWymUmKW7b5C3y62OAG8`;
+}
+
+export function drawWeather(data, el) {
+  const weatherBlock = el.querySelector("#weatherBlock");
+  const cityMap = el.querySelector("#cityMap");
   const cityTitle = document.createElement("h2");
   cityTitle.id = "cityTitle";
   const currentTemp = document.createElement("p");
@@ -52,7 +58,9 @@ export function drawWeather(data, weatherBlock) {
   weatherDescription.id = "weatherDescription";
   const weatherIcon = document.createElement("img");
   weatherIcon.id = "weatherIcon";
-  cityTitle.innerText = data.name;
+  const cityName = data.name;
+  cityTitle.innerText = cityName;
+  cityMap.src = getCityMapImgAddress(cityName);
   const temperature = data.main.temp;
   currentTemp.innerText =
     temperature > 0 ? `+${temperature}° С` : `${temperature}° С`;
