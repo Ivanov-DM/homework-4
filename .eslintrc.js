@@ -19,6 +19,7 @@ module.exports = {
         ignoreTemplateLiterals: true,
       },
     ],
+    "no-alert": "off",
   },
 
   plugins: ["jest"],

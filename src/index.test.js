@@ -105,7 +105,7 @@ describe("Tests for index.js", () => {
       expect(cityTitle).not.toBeNull();
       expect(cityTitle.innerText).toEqual("Elista");
       expect(currentTemp).not.toBeNull();
-      expect(currentTemp.innerText).toEqual("+1.83° С");
+      expect(currentTemp.innerText).toEqual("+2° С");
       expect(description).not.toBeNull();
       expect(description.innerText).toEqual("overcast clouds");
       expect(weatherIcon).not.toBeNull();
