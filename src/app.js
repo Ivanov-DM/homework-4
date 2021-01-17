@@ -1,3 +1,5 @@
+import { saveList, readList, drawList } from "./storage";
+
 const OPEN_WEATHER_MAP_API_KEY = "325a22275c1255e94a9b1ee8ae86259a";
 
 export function getCurrentCityTitle() {
@@ -63,6 +65,8 @@ export function createForm(el) {
 
   const historyListHeader = document.createElement("h2");
   historyListHeader.innerText = "You have watched the weather in:";
+  const cityList = readList();
+  drawList(historyList, cityList);
 
   const cityMap = document.createElement("img");
   cityMap.id = "cityMap";
@@ -80,9 +84,22 @@ export function createForm(el) {
       getWeatherData(inputCity).then((data) => {
         drawWeather(data, el);
         const cityName = data.name;
+        if (cityList.indexOf(cityName) === -1) {
+          cityList.unshift(cityName);
+          drawList(historyList, cityList);
+          saveList(cityName);
+        }
         cityMap.src = getCityMapImgAddress(cityName);
       });
     }
+  });
+
+  historyList.addEventListener("click", (event) => {
+    const checkedCityName = event.target.innerText;
+    getWeatherData(checkedCityName).then((data) => {
+      drawWeather(data, el);
+      document.querySelector("#cityMap").src = getCityMapImgAddress(data.name);
+    });
   });
 
   el.appendChild(inputForm);
