@@ -5,6 +5,8 @@ import {
   drawWeather,
 } from "./app";
 
+import "./css/index.css";
+
 const container = document.querySelector("#container");
 
 createForm(container);
