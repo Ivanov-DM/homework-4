@@ -1,3 +1,96 @@
 body {
-  background-color: darkgray;
+  overflow-x: hidden;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#container {
+  width: 500px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#container form {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#userInput {
+  width: 70%;
+  height: 30px;
+  vertical-align: middle;
+}
+
+#container form button {
+  width: 30%;
+  height: 30px;
+  vertical-align: middle;
+}
+
+#weatherBlock {
+  width: 100%;
+  height: 160px;
+  position: relative;
+  border-bottom: solid;
+}
+
+#container h2 {
+  font-size: 1.5rem;
+  border-top: solid;
+  padding-top: 3px;
+  border-bottom: solid;
+  padding-bottom: 5px;
+}
+
+#currentTemp {
+  font-size: 4rem;
+  display: inline-block;
+  position: absolute;
+  width: auto;
+  vertical-align: middle;
+  top: 40px;
+}
+
+#weatherIcon {
+  display: inline-block;
+  position: absolute;
+  height: 120px;
+  vertical-align: middle;
+  top: 10px;
+  left: 170px;
+}
+
+#weatherDescription {
+  font-size: 2rem;
+  display: block;
+  position: absolute;
+  bottom: 10px;
+}
+
+#weatherBlock h2 {
+  font-size: 2rem;
+  border-top: none;
+  border-bottom: none;
+}
+
+#cityMap {
+  display: block;
+  position: relative;
+  left: 30px;
+  margin: 20px;
+}
+
+#historyList li {
+  cursor: pointer;
+  list-style-type: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#historyList ul {
+  font-size: 1.5rem;
 }
