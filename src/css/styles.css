@@ -41,9 +41,9 @@ h1 {
 #container h2 {
   font-size: 1.5rem;
   border-top: solid;
-  padding-top: 3px;
+  padding-top: 13px;
   border-bottom: solid;
-  padding-bottom: 5px;
+  padding-bottom: 15px;
 }
 
 #currentTemp {
