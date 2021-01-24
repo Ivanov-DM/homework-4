@@ -1,9 +1,15 @@
-import { sum } from "./example";
+import {
+  createForm,
+  getCurrentCityTitle,
+  getWeatherData,
+  drawWeather,
+} from "./app";
 
-function component() {
-  const element = document.createElement("div");
-  element.innerHTML = `1 + 2 = ${sum(1, 2)}`;
-  return element;
-}
+import "./css/index.css";
 
-document.body.appendChild(component());
+const container = document.querySelector("#container");
+
+createForm(container);
+getCurrentCityTitle().then((cityName) =>
+  getWeatherData(cityName).then((data) => drawWeather(data, container))
+);
