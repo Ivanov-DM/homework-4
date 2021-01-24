@@ -19,6 +19,12 @@ export function getCityMapImgAddress(cityName) {
 
 export function drawWeather(data, el) {
   const weatherBlock = el.querySelector("#weatherBlock");
+  if (data.cod === "404") {
+    weatherBlock.innerHTML = `<p style="text-align: center; width: 100%; height: 100%; line-height: 130px; font-size: 2rem;">
+                                 Wrong city name, please try again
+                              </p>`;
+    return;
+  }
   if (weatherBlock.childNodes.length !== 0) {
     weatherBlock.innerHTML = "";
   }
@@ -79,19 +85,23 @@ export function createForm(el) {
     const inputCity = inputField.value;
     if (inputCity === "") {
       alert("Enter some city");
-    } else {
-      inputField.value = "";
-      getWeatherData(inputCity).then((data) => {
-        drawWeather(data, el);
-        const cityName = data.name;
-        if (cityList.indexOf(cityName) === -1) {
-          cityList.unshift(cityName);
-          drawList(historyList, cityList);
-          saveList(cityName);
-        }
-        cityMap.src = getCityMapImgAddress(cityName);
-      });
+      return;
     }
+    inputField.value = "";
+    getWeatherData(inputCity).then((data) => {
+      drawWeather(data, el);
+      if (data.cod === "404") {
+        cityMap.src = "";
+        return;
+      }
+      const cityName = data.name;
+      if (cityList.indexOf(cityName) === -1) {
+        cityList.unshift(cityName);
+        drawList(historyList, cityList);
+        saveList(cityName);
+      }
+      cityMap.src = getCityMapImgAddress(cityName);
+    });
   });
 
   historyList.addEventListener("click", (event) => {
